@@ -1,0 +1,10 @@
+const menuToggle=document.getElementById('menuToggle');
+const nav=document.getElementById('nav');
+menuToggle.addEventListener('click',()=>{const open=nav.classList.toggle('open');menuToggle.setAttribute('aria-expanded',String(open));menuToggle.setAttribute('aria-label',open?'Close navigation':'Open navigation');menuToggle.textContent=open?'×':'☰';});
+nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{nav.classList.remove('open');menuToggle.setAttribute('aria-expanded','false');menuToggle.textContent='☰';}));
+const themeToggle=document.getElementById('themeToggle');
+themeToggle.addEventListener('click',()=>{document.body.classList.toggle('light');const light=document.body.classList.contains('light');themeToggle.textContent=light?'☾':'☼';themeToggle.setAttribute('aria-label',light?'Switch to dark theme':'Switch to light theme');});
+document.querySelectorAll('.filter').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));button.classList.add('active');const filter=button.dataset.filter;document.querySelectorAll('.project-card').forEach(card=>{card.hidden=filter!=='all'&&card.dataset.category!==filter;});}));
+document.getElementById('year').textContent=new Date().getFullYear();
+const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target);}}),{threshold:.08});
+document.querySelectorAll('.section-heading,.project-card,.timeline-item,.skill-group,.about-note,.education-row,.certs>div').forEach(el=>{el.classList.add('reveal');observer.observe(el);});
